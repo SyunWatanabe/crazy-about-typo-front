@@ -17,14 +17,11 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "settings": {
     "import/resolver": {
       "node": {
-      "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
   },
@@ -48,6 +45,7 @@
       }
     ],
     "no-use-before-define": "off",
+    "no-unneeded-ternary": "off",
     "@typescript-eslint/no-use-before-define": ["error"]
   }
 }

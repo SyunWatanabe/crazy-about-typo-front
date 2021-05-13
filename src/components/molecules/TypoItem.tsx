@@ -3,7 +3,11 @@ import { Box, Flex, Tag, HStack } from "@chakra-ui/react";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-const TypoItem: VFC = memo(() => {
+import { Typo } from "../../types";
+
+const TypoItem: VFC<Typo> = memo((props) => {
+  const { typoText, correctText } = props;
+
   const [liked, setLiked] = useState(false);
 
   return (
@@ -71,13 +75,13 @@ const TypoItem: VFC = memo(() => {
             <Box as="span" fontSize="sm" mr={2}>
               ❌
             </Box>
-            よろしくおねがいしマングース
+            {typoText}
           </Box>
           <Box>
             <Box as="span" fontSize="sm" mr={2}>
               ⭕
             </Box>
-            よろしくおねがいします
+            {correctText}
           </Box>
         </Flex>
       </Flex>

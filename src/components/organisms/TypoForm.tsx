@@ -14,6 +14,8 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
+import { db } from "../../firebase";
+
 type FormInputs = {
   typoText: string;
   correctText: string;
@@ -39,13 +41,22 @@ const TypoForm: VFC = memo(() => {
   });
 
   const onSubmit = async (data: FormInputs) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     setShowAlert(true);
     setValue("typoText", "");
     setValue("correctText", "");
     setValue("detailText", "");
-    // eslint-disable-next-line no-alert
-    alert(JSON.stringify(data));
+
+    try {
+      await db.collection("typos").add({
+        typoText: data.typoText,
+        correctText: data.correctText,
+        detailText: data.detailText,
+      });
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+    }
   };
 
   return (

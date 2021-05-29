@@ -7,12 +7,11 @@ import { Typo } from "../../types";
 import TypoItem from "../molecules/TypoItem";
 
 const LatestTypoList: VFC = memo(() => {
-  const [values, loading, error] = useCollectionData<Typo>(
-    db.collection("typos"),
-    {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    }
-  );
+  const typosRef = db.collection("typos");
+  const getLatestQuery = typosRef.orderBy("createdAt", "desc").limit(10);
+  const [values, loading, error] = useCollectionData<Typo>(getLatestQuery, {
+    snapshotListenOptions: { includeMetadataChanges: true },
+  });
 
   return (
     <>

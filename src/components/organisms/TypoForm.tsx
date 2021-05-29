@@ -14,12 +14,14 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
+import firebase from "firebase";
 import { db } from "../../firebase";
 
 type FormInputs = {
   typoText: string;
   correctText: string;
   detailText: string;
+  createdAt: number;
 };
 
 const TypoForm: VFC = memo(() => {
@@ -52,6 +54,7 @@ const TypoForm: VFC = memo(() => {
         typoText: data.typoText,
         correctText: data.correctText,
         detailText: data.detailText,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
     } catch (err) {
       // eslint-disable-next-line no-console

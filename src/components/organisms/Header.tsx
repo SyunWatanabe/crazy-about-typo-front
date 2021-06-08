@@ -1,11 +1,39 @@
 import React, { memo, VFC } from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
-import { Flex, Link, Heading, useDisclosure } from "@chakra-ui/react";
+import {
+  Flex,
+  Link,
+  Heading,
+  useDisclosure,
+  Spacer,
+  useToast,
+} from "@chakra-ui/react";
 import MenuIconButton from "../atoms/button/MenuIconButton";
 import MenuDrawer from "../molecules/MenuDrawer";
+import { auth } from "../../firebase";
 
 const Header: VFC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+
+  const handleLogout = () => {
+    auth
+      .signOut()
+      .then(() => {
+        toast({
+          title: "ログアウトしました",
+          status: "success",
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      });
+  };
+
+  // TODO: state実装
+  const isLoggedIn = false;
 
   return (
     <Flex
@@ -35,6 +63,21 @@ const Header: VFC = memo(() => {
         <Link as={ReactRouterLink} to="/typos">
           Typo
         </Link>
+        <Spacer />
+        {isLoggedIn ? (
+          <>
+            <Link mr={2} as={ReactRouterLink} to="/signup">
+              Sign Up
+            </Link>
+            <Link mr={5} as={ReactRouterLink} to="/login">
+              Login
+            </Link>
+          </>
+        ) : (
+          <Link mr={5} as={ReactRouterLink} to="/" onClick={handleLogout}>
+            Logout
+          </Link>
+        )}
       </Flex>
       <MenuIconButton onClick={onOpen} />
       <MenuDrawer onClose={onClose} isOpen={isOpen} />
